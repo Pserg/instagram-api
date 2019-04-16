@@ -1,14 +1,14 @@
 require 'ostruct'
 
-class IgApiLoginFailed < StandardError
-  attr_reader :object
-
-  def initialize(object)
-    @object = object
-  end
-end
-
 module IgApi
+  class IgApiLoginFailed < StandardError
+    attr_reader :object
+
+    def initialize(object)
+      @object = object
+    end
+  end
+
   class Account
     def initialized
       @api = nil
@@ -43,7 +43,6 @@ module IgApi
       response = JSON.parse request.body, object_class: OpenStruct
 
       raise IgApiLoginFailed, response.message if response.status == 'fail'
-
       logged_in_user = response.logged_in_user
       user.data = logged_in_user
 
